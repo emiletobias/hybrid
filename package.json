@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "edge": "^7.10.1",
     "express": "^4.16.2",
     "sonic_differ": "^1.0.7"
   }
