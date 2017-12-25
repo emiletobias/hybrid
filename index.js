@@ -2,7 +2,9 @@ var express = require('express')
 var app = express()
 const differ = require('sonic_differ');
 const fs = require('fs');
-const https = require('https');
+const http = require('http');
+
+app.disable('etag'); 
 
 let sonic = {
     buffer: [],
@@ -54,8 +56,8 @@ app.get('/test.html', function (request, response) {
 
     const options = {
         hostname: 'www.iqiyi.com',
-        port: 443,
-        path: '/kszt_phone/schseason20170224.html',
+        port: 80,
+        path: '/kszt_phone/html5PageTest.html',
         method: 'GET',
         headers: {
             'User-Agent' : 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1 IqiyiVersion/8.12.0 ImallVersion/8.12.0',
@@ -65,7 +67,7 @@ app.get('/test.html', function (request, response) {
         }
     };
 
-    var req = https.request(options, (res) => {
+    var req = http.request(options, (res) => {
 
         res.on('data', (chunk) => {
             sonic.write(chunk)

@@ -18,16 +18,21 @@ let sonic = {
 app.get('/test.html', function (request, response) {
 
 
+    console.log("in request")
 
     var filename = __dirname + '/page/test.html';
 
     fs.readFile(filename, 'utf8', (err, data) => {
 
+        console.log("in readfile")
+
         sonic.write(data)
+
+        console.log("after write data")
 
         let result = differ( request, response, Buffer.concat(sonic.buffer));
 
-        console.log("end: " + result.data)
+        //console.log("end: " + result.data)
 
         sonic.buffer = [];
         if (result.cache) {
