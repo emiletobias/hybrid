@@ -1,0 +1,26 @@
+<script type="text/javascript">
+
+       function getDiffDataCallback(result){
+
+            alert("in getDiffDataCallback:" + result);
+
+            hybridUpdateData = JSON.parse(result);
+
+            handlehybridDiffData(hybridUpdateData);
+        }
+
+
+        function handlehybridDiffData( hybridUpdateData){
+
+            //Websites will be updated dynamically and run some JavaScript while in local refresh mode.
+            var html = '';
+            var id = '';
+            var elementObj = '';
+            for(var key in hybridUpdateData){
+                id = key.substring(1,key.length-1);
+                html = hybridUpdateData[key];
+                elementObj = document.getElementsByClassName("com-" + key)[0];
+                elementObj.outerHTML = html;
+            }
+        }
+</script>

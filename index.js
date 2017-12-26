@@ -4,7 +4,8 @@ const differ = require('sonic_differ');
 const fs = require('fs');
 const http = require('http');
 
-app.disable('etag'); 
+app.disable('etag');
+
 
 let sonic = {
     buffer: [],
@@ -19,40 +20,6 @@ let sonic = {
 };
 
 app.get('/test.html', function (request, response) {
-
-
-
-/*    var filename = __dirname + '/page/test.html';
-
-    var readStream = fs.createReadStream(filename);
-
-    readStream.on('data', (chunk) => {
-        console.log(chunk)
-        sonic.write("data: " + chunk)
-    });
-
-    response.on('end', () => {
-
-        console.log("In end:") 
-
-        let result = differ( request, response, Buffer.concat(sonic.buffer));
-
-        console.log("end: " + result.data)
-
-        sonic.buffer = [];
-        if (result.cache) {
-            //304 Not Modified, return nothing.
-            return ''
-        } else {
-
-            //other Sonic status.
-            return result.data
-        }
-    });
-
-    readStream.on('open', function () {
-        readStream.pipe(response);
-    });*/
 
     const options = {
         hostname: 'www.iqiyi.com',
@@ -99,6 +66,16 @@ app.get('/test.html', function (request, response) {
     req.end();
 
 })
+
+app.get('/sw.js', function (request, response) {
+    var filename = __dirname + '/page/sw.js';
+
+    fs.readFile(filename, 'utf8', (err, data) => {
+        response.set("content-type","text/javascript")
+        response.send(data).end();
+    });
+
+});
 
 app.listen(8090, function () {
   console.log('Example app listening on port 8090!')
